@@ -1,0 +1,32 @@
+1 - Página Inicial
+
+    Apresentação do aplicativo e sua importância.
+    Botão para cadastro ou login.
+
+2 - Tela de Cadastro
+
+    Formulário para que novos usuários se registrem.
+
+3 - Tela de Login
+
+    Campos para entrada de e-mail e senha.
+
+4 - Tela de Cadastro de Incêndio
+
+    Campos para descrever a localização, tipo e gravidade do incêndio.
+    Opção para abrir um mapa e desenhar a área onde o incêndio está acontecendo.
+    Botão para enviar o alerta.
+
+5 - Tela de Alertas
+
+    Lista de incêndios cadastrados próximos ao usuário.
+    Opção de visualizar detalhes de cada incêndio.
+    Link para abrir o mapa com os incêndios cadastrados.
+
+6 - Tela de Configurações
+
+    Permite que os usuários ajustem suas preferências de notificação e perfil.
+
+7 - Área Administrativa (Restrita)
+
+    Para autoridades, permitindo visualizar todos os incêndios registrados e gerenciar alertas.
