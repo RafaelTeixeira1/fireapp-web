@@ -1,0 +1,481 @@
+<html><head><base href="">
+<meta charset="UTF-8">
+<title>FireApp - Alertas de Incêndio</title>
+<style>
+:root {
+  --primary: #ff4141;
+  --secondary: #2b4c7e;
+  --success: #28a745;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --light: #f8f9fa;
+  --dark: #343a40;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.alerts-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  color: var(--primary);
+}
+
+.view-toggle {
+  display: flex;
+  gap: 1rem;
+}
+
+.view-toggle button {
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--secondary);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.view-toggle button:hover {
+  transform: translateY(-2px);
+  background: #1f3a5f;
+}
+
+.view-toggle button.active {
+  background: var(--primary);
+}
+
+.alerts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.alert-card {
+  background: white;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.alert-card:hover {
+  transform: translateY(-5px);
+}
+
+.alert-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 1rem;
+}
+
+.alert-type {
+  background: var(--light);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: var(--dark);
+}
+
+.severity {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: white;
+}
+
+.severity.high {
+  background: var(--danger);
+}
+
+.severity.medium {
+  background: var(--warning);
+}
+
+.severity.low {
+  background: var(--success);
+}
+
+.alert-location {
+  margin: 1rem 0;
+  color: var(--dark);
+}
+
+.alert-time {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.alert-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn {
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+  flex: 1;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-secondary {
+  background: var(--secondary);
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+#map {
+  width: 100%;
+  height: 600px;
+  border-radius: 15px;
+  display: none;
+}
+
+.map-view #map {
+  display: block;
+}
+
+.map-view .alerts-grid {
+  display: none;
+}
+
+.alert-info {
+  margin: 1rem 0;
+}
+
+.alert-info p {
+  margin: 0.5rem 0;
+  color: var(--dark);
+}
+
+.distance {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.btn-back {
+  max-width: 80px;
+  padding: 0.4rem 1rem; 
+  font-size: 0.9rem; 
+  background-color: var(--secondary); 
+  color: var(--light); 
+  border-radius: 5px; 
+  cursor: pointer; 
+  transition: all 0.3s ease; 
+  margin-top: 1rem;
+}
+
+
+.btn-back:hover {
+  background-color: var(--secondary); 
+  color: white; 
+  transform: translateY(-2px); 
+}
+
+.btn-back:focus {
+  outline: none; 
+}
+
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="alerts-container" id="alertsContainer">
+    <div class="header">
+      <button type="button" class="btn btn-back" onclick="window.location.href='telaPrincipal.html'">Voltar</button>
+      <h1>Alertas de Incêndio</h1>
+      <div class="view-toggle">
+        <button onclick="toggleView('list')" id="listViewBtn" class="active">
+          <i class="fas fa-list"></i> Lista
+        </button>
+        <button onclick="toggleView('map')" id="mapViewBtn">
+          <i class="fas fa-map-marked-alt"></i> Mapa
+        </button>
+      </div>
+    </div>
+
+    <div class="alerts-grid" id="alertsGrid">
+      <!-- Cards serão inseridos dinamicamente aqui -->
+    </div>
+
+    <div id="map"></div>
+  </div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
+<script>
+let map;
+let markers = [];
+let currentPosition;
+
+// Dados simulados de alertas
+const mockAlerts = [
+  {
+    id: 1,
+    type: 'Vegetação Nativa',
+    severity: 'high',
+    location: 'Fazenda São João',
+    description: 'Incêndio de grande proporção em área de vegetação nativa',
+    coordinates: { lat: -15.7801, lng: -47.9292 },
+    timestamp: new Date(Date.now() - 1800000), // 30 minutos atrás
+    distance: 2.5
+  },
+  {
+    id: 2,
+    type: 'Plantação',
+    severity: 'medium',
+    location: 'Sítio Boa Esperança',
+    description: 'Fogo em área de plantação de milho',
+    coordinates: { lat: -15.7901, lng: -47.9392 },
+    timestamp: new Date(Date.now() - 3600000), // 1 hora atrás
+    distance: 4.8
+  },
+  {
+    id: 3,
+    type: 'Mata/Floresta',
+    severity: 'low',
+    location: 'Reserva Florestal',
+    description: 'Pequeno foco de incêndio identificado',
+    coordinates: { lat: -15.7701, lng: -47.9192 },
+    timestamp: new Date(Date.now() - 7200000), // 2 horas atrás
+    distance: 1.2
+  }
+];
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 10,
+    center: { lat: -15.7801, lng: -47.9292 },
+    mapTypeId: 'satellite'
+  });
+
+  // Tenta obter localização atual do usuário
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        currentPosition = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+        map.setCenter(currentPosition);
+        addUserMarker(currentPosition);
+        loadAlerts();
+      },
+      () => {
+        console.log('Erro ao obter localização');
+        loadAlerts();
+      }
+    );
+  } else {
+    loadAlerts();
+  }
+}
+
+function addUserMarker(position) {
+  new google.maps.Marker({
+    position: position,
+    map: map,
+    icon: {
+      path: google.maps.SymbolPath.CIRCLE,
+      scale: 10,
+      fillColor: "#4285F4",
+      fillOpacity: 1,
+      strokeColor: "#FFFFFF",
+      strokeWeight: 2
+    },
+    title: "Sua localização"
+  });
+}
+
+function createAlertCard(alert) {
+  const timeAgo = getTimeAgo(alert.timestamp);
+  
+  return `
+    <div class="alert-card">
+      <div class="alert-header">
+        <span class="alert-type">${alert.type}</span>
+        <span class="severity ${alert.severity}">${getSeverityText(alert.severity)}</span>
+      </div>
+      <div class="alert-location">
+        <i class="fas fa-map-marker-alt"></i> ${alert.location}
+      </div>
+      <div class="alert-time">
+        <i class="fas fa-clock"></i> ${timeAgo}
+      </div>
+      <div class="alert-info">
+        <p>${alert.description}</p>
+        <p class="distance"><i class="fas fa-location-arrow"></i> ${alert.distance} km de distância</p>
+      </div>
+      <div class="alert-actions">
+        <a href="#" onclick="showDetails(${alert.id})" class="btn btn-secondary">
+          <i class="fas fa-info-circle"></i> Detalhes
+        </a>
+        <a href="#" onclick="navigateToFire(${alert.coordinates.lat}, ${alert.coordinates.lng})" class="btn btn-primary">
+          <i class="fas fa-map-marked-alt"></i> Ver no Mapa
+        </a>
+      </div>
+    </div>
+  `;
+}
+
+function loadAlerts() {
+  const alertsGrid = document.getElementById('alertsGrid');
+  alertsGrid.innerHTML = '';
+  
+  mockAlerts.forEach(alert => {
+    alertsGrid.innerHTML += createAlertCard(alert);
+    addMarkerToMap(alert);
+  });
+}
+
+function addMarkerToMap(alert) {
+  const marker = new google.maps.Marker({
+    position: alert.coordinates,
+    map: map,
+    icon: {
+      path: google.maps.SymbolPath.CIRCLE,
+      scale: 15,
+      fillColor: getSeverityColor(alert.severity),
+      fillOpacity: 0.7,
+      strokeColor: "#FFFFFF",
+      strokeWeight: 2
+    },
+    title: alert.type
+  });
+
+  const infoWindow = new google.maps.InfoWindow({
+    content: `
+      <div style="padding: 10px;">
+        <h3>${alert.type}</h3>
+        <p>${alert.description}</p>
+        <p><strong>Local:</strong> ${alert.location}</p>
+        <p><strong>Gravidade:</strong> ${getSeverityText(alert.severity)}</p>
+      </div>
+    `
+  });
+
+  marker.addListener('click', () => {
+    infoWindow.open(map, marker);
+  });
+
+  markers.push(marker);
+}
+
+function toggleView(view) {
+  const container = document.getElementById('alertsContainer');
+  const listBtn = document.getElementById('listViewBtn');
+  const mapBtn = document.getElementById('mapViewBtn');
+
+  if (view === 'map') {
+    container.classList.add('map-view');
+    mapBtn.classList.add('active');
+    listBtn.classList.remove('active');
+    google.maps.event.trigger(map, 'resize');
+  } else {
+    container.classList.remove('map-view');
+    listBtn.classList.add('active');
+    mapBtn.classList.remove('active');
+  }
+}
+
+function showDetails(alertId) {
+  const alert = mockAlerts.find(a => a.id === alertId);
+  // Implemente a lógica para mostrar detalhes do alerta
+  console.log('Mostrar detalhes do alerta:', alert);
+}
+
+function navigateToFire(lat, lng) {
+  toggleView('map');
+  map.setCenter({ lat, lng });
+  map.setZoom(15);
+}
+
+function getSeverityText(severity) {
+  const texts = {
+    high: 'Alta',
+    medium: 'Média',
+    low: 'Baixa'
+  };
+  return texts[severity];
+}
+
+function getSeverityColor(severity) {
+  const colors = {
+    high: '#dc3545',
+    medium: '#ffc107',
+    low: '#28a745'
+  };
+  return colors[severity];
+}
+
+function getTimeAgo(date) {
+  const seconds = Math.floor((new Date() - date) / 1000);
+  
+  let interval = Math.floor(seconds / 31536000);
+  if (interval > 1) return interval + ' anos atrás';
+  if (interval === 1) return 'há 1 ano';
+  
+  interval = Math.floor(seconds / 2592000);
+  if (interval > 1) return interval + ' meses atrás';
+  if (interval === 1) return 'há 1 mês';
+  
+  interval = Math.floor(seconds / 86400);
+  if (interval > 1) return interval + ' dias atrás';
+  if (interval === 1) return 'há 1 dia';
+  
+  interval = Math.floor(seconds / 3600);
+  if (interval > 1) return interval + ' horas atrás';
+  if (interval === 1) return 'há 1 hora';
+  
+  interval = Math.floor(seconds / 60);
+  if (interval > 1) return interval + ' minutos atrás';
+  if (interval === 1) return 'há 1 minuto';
+  
+  return 'agora mesmo';
+}
+
+// Inicializa o mapa quando a página carregar
+window.onload = initMap;
+</script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<html><head><base href="">
+<meta charset="UTF-8">
+<title>FireApp - Sistema de Controle de Incêndios</title>
+<style>
+:root {
+  --primary: #ff4141;
+  --secondary: #2b4c7e;
+  --success: #28a745;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --light: #f8f9fa;
+  --dark: #343a40;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Navigation */
+.nav {
+  background: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/fogo.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  color: white;
+  text-align: center;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Buttons */
+.btn {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #ff2929;
+}
+
+.btn-secondary {
+  background: var(--secondary);
+  color: white;
+}
+
+/* Forms */
+.form-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--dark);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Features Section */
+.features {
+  padding: 4rem 0;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.feature-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.logo-img {
+  max-width: 50px; 
+  height: auto;
+}
+
+
+
+</style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-content">
+      <a href="/" class="logo">
+        <img src="images/logo.png" alt="Logo FireApp" class="logo-img">
+        <span>FireApp</span>
+      </a>
+      <div>
+        <a href="login.html" class="btn btn-secondary">Login</a>
+        <a href="cadastro.html" class="btn btn-primary">Cadastrar</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <section class="hero">
+    <div class="hero-content">
+      <a href="/" class="logo">
+      </a>
+      <h1>Protegendo Vidas e o Meio Ambiente </h1>
+      <p>O FireApp é um sistema avançado de monitoramento e alerta de incêndios que ajuda a salvar vidas e preservar nosso meio ambiente.</p>
+      <a href="cadastro.html" class="btn btn-primary">Começar Agora</a>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="container">
+      <h2>Como o FireApp pode ajudar?</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <i class="fa-solid fa-bell fa-3x" style="margin-bottom: 10px;"></i>
+          <h3>Alerta Rápido</h3>
+          <p>Notificações em tempo real sobre incêndios próximos à sua localização.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fa-solid fa-map-location fa-3x" style="margin-bottom: 10px;"></i>
+          <h3>Mapeamento Preciso</h3>
+          <p>Visualize áreas afetadas e rotas de fuga em um mapa interativo.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fa-solid fa-handshake fa-3x" style="margin-bottom: 10px;"></i>
+          <h3>Colaboração</h3>
+          <p>Comunidade engajada no combate e prevenção de incêndios.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+<script>
+
+</script>
+
+</body>
+</html>

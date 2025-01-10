@@ -1,0 +1,314 @@
+<html><head><base href="">
+<meta charset="UTF-8">
+<title>FireApp - Painel Administrativo</title>
+<style>
+:root {
+  --primary: #ff4141;
+  --secondary: #2b4c7e;
+  --success: #28a745;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --light: #f8f9fa;
+  --dark: #343a40;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.admin-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.header p {
+  color: var(--dark);
+  opacity: 0.8;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.stat-card h3 {
+  color: var(--secondary);
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.stat-card .value {
+  color: var(--primary);
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.fire-table {
+  width: 100%;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.fire-table th,
+.fire-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.fire-table th {
+  background: var(--secondary);
+  color: white;
+}
+
+.fire-table tr:hover {
+  background: #f5f5f5;
+}
+
+.status-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.status-active {
+  background: var(--danger);
+  color: white;
+}
+
+.status-controlled {
+  background: var(--warning);
+  color: var(--dark);
+}
+
+.status-resolved {
+  background: var(--success);
+  color: white;
+}
+
+.action-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-right: 0.5rem;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-select {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  min-width: 150px;
+}
+
+.btn-back {
+  max-width: 80px;
+  padding: 0.4rem 1rem; 
+  font-size: 0.9rem; 
+  background-color: var(--secondary); 
+  color: var(--light); 
+  border-radius: 5px; 
+  cursor: pointer; 
+  transition: all 0.3s ease; 
+  margin-top: 1rem;
+}
+
+.btn-back:hover {
+  background-color: var(--secondary); 
+  color: white; 
+  transform: translateY(-2px); 
+}
+
+.btn-back:focus {
+  outline: none; 
+}
+
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="admin-container">
+    <button type="button" class="btn btn-back" onclick="window.location.href='telaPrincipal.html'">Voltar</button>
+    <div class="header">
+      <h1>Painel Administrativo</h1>
+      <p>Gerenciamento de incêndios e alertas</p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Incêndios Ativos</h3>
+        <div class="value">12</div>
+      </div>
+      <div class="stat-card">
+        <h3>Total de Alertas</h3>
+        <div class="value">45</div>
+      </div>
+      <div class="stat-card">
+        <h3>Área Total Afetada</h3>
+        <div class="value">2.5k ha</div>
+      </div>
+      <div class="stat-card">
+        <h3>Usuários Registrados</h3>
+        <div class="value">1.2k</div>
+      </div>
+    </div>
+
+    <div class="filters">
+      <select class="filter-select" id="statusFilter">
+        <option value="">Status</option>
+        <option value="active">Ativo</option>
+        <option value="controlled">Controlado</option>
+        <option value="resolved">Resolvido</option>
+      </select>
+      
+      <select class="filter-select" id="regionFilter">
+        <option value="">Região</option>
+        <option value="north">Norte</option>
+        <option value="south">Sul</option>
+        <option value="east">Leste</option>
+        <option value="west">Oeste</option>
+      </select>
+
+      <select class="filter-select" id="dateFilter">
+        <option value="">Período</option>
+        <option value="today">Hoje</option>
+        <option value="week">Última Semana</option>
+        <option value="month">Último Mês</option>
+      </select>
+    </div>
+
+    <table class="fire-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Local</th>
+          <th>Data/Hora</th>
+          <th>Área Afetada</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="fireTableBody">
+      </tbody>
+    </table>
+  </div>
+
+<script>
+  const fires = [
+    {
+      id: "F001",
+      location: "Fazenda São João",
+      timestamp: "2024-01-15 14:30",
+      area: "150 ha",
+      status: "active"
+    },
+    {
+      id: "F002",
+      location: "Reserva Natural Sul",
+      timestamp: "2024-01-14 09:15",
+      status: "controlled",
+      area: "75 ha"
+    },
+    {
+      id: "F003",
+      location: "Serra do Campo",
+      timestamp: "2024-01-13 16:45",
+      status: "resolved",
+      area: "200 ha"
+    }
+  ];
+
+  function getStatusBadge(status) {
+    const statusClasses = {
+      active: "status-active",
+      controlled: "status-controlled",
+      resolved: "status-resolved"
+    };
+    const statusLabels = {
+      active: "Ativo",
+      controlled: "Controlado",
+      resolved: "Resolvido"
+    };
+    return `<span class="status-badge ${statusClasses[status]}">${statusLabels[status]}</span>`;
+  }
+
+  function renderFireTable() {
+    const tableBody = document.getElementById('fireTableBody');
+    tableBody.innerHTML = fires.map(fire => `
+      <tr>
+        <td>${fire.id}</td>
+        <td>${fire.location}</td>
+        <td>${fire.timestamp}</td>
+        <td>${fire.area}</td>
+        <td>${getStatusBadge(fire.status)}</td>
+        <td>
+          <button class="action-btn btn-primary" onclick="viewDetails('${fire.id}')">
+            <i class="fas fa-eye"></i> Ver
+          </button>
+          <button class="action-btn btn-secondary" onclick="updateStatus('${fire.id}')">
+            <i class="fas fa-edit"></i> Status
+          </button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function viewDetails(id) {
+    alert(`Visualizando detalhes do incêndio ${id}`);
+  }
+
+  function updateStatus(id) {
+    alert(`Atualizando status do incêndio ${id}`);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderFireTable();
+    
+    document.querySelectorAll('.filter-select').forEach(select => {
+      select.addEventListener('change', () => {
+        console.log('Filtro alterado:', select.value);
+      });
+    });
+  });
+</script>
+</body>
+</html>
