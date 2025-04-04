@@ -17,5 +17,5 @@ Este aplicativo permite o cadastro de incêndios, envio de alertas, visualizaç�
 ### Frontend:
 * HTML, CSS, JavaScript
 * Biblioteca Leaflet para visualização de mapas interativos
-* Backend: (não detalhado neste momento, pode ser integrado com qualquer solução de backend como Node.js, Python Flask, ou Java Spring Boot)
+* Backend: (não detalhado neste momento, pode ser integrado com qualquer solução de backend como Node.js, Python Flask, Java Spring Boot ou PHP)
 * Design Responsivo: O design é adaptável para telas de diferentes tamanhos (desktops, tablets, smartphones).
