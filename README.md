@@ -14,13 +14,12 @@ O **FireApp** é um sistema web desenvolvido para **monitoramento, registro e ge
 
 ## 🛠 Tecnologias utilizadas
 
-🔹 **Laravel 10** — Framework PHP para o backend e gerenciamento de rotas, controllers, models e migrations.  
+🔹 **Laravel 12.17.0** — Framework PHP para o backend e gerenciamento de rotas, controllers, models e migrations.  
 🔹 **Tailwind CSS** — Framework CSS utility-first para estilização rápida e responsiva.  
 🔹 **Blade** — Motor de templates do Laravel para gerar o frontend de forma dinâmica.  
 🔹 **Leaflet + Leaflet Draw** — Para exibir e permitir o desenho de áreas no mapa.  
-🔹 **MySQL / MariaDB** — Banco de dados relacional utilizado para persistência das informações.  
+🔹 **MySQL** — Banco de dados relacional utilizado para persistência das informações.  
 🔹 **Vite** — Ferramenta de build e hot-reload para os assets do projeto.  
-🔹 **Jetstream / Breeze** — (se utilizado) Para scaffolding de autenticação e estrutura inicial.
 
 ---
 
