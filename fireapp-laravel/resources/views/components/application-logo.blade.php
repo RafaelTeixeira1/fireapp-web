@@ -1,0 +1,1 @@
+<img src="{{ asset('storage/photos/logo.png') }}" alt="FireApp" class="{{ $attributes['class'] ?? 'h-9 w-auto' }}">
