@@ -1,62 +1,104 @@
-# FireApp 🔥
+# FireApp Web 🔥
 
-O **FireApp** é um sistema web desenvolvido para **monitoramento, registro e gerenciamento de incêndios em áreas rurais**. Ele permite o cadastro, visualização e mapeamento de ocorrências de incêndios, além de fornecer funcionalidades para configuração de alertas e privacidade dos usuários.
+Sistema web para registro, monitoramento e gerenciamento de ocorrências de incêndio, desenvolvido com Laravel e recursos de georreferenciamento.
 
-## 📌 Objetivos e utilidades
+## Sobre o projeto
 
-✅ Permitir que usuários registrem incêndios com informações detalhadas (tipo, gravidade, ponto de referência e área no mapa).  
-✅ Gerar um **mapa interativo** com as áreas afetadas para facilitar o acompanhamento e combate.  
-✅ Configurar **notificações personalizadas** (push, e-mail, SMS) e **horários de alerta**.  
-✅ Gerenciar a **privacidade** dos dados do usuário e controle sobre o compartilhamento da localização.  
-✅ Fornecer um **painel administrativo** para gestão dos dados e acompanhamento geral do sistema.
+O FireApp Web permite registrar e acompanhar ocorrências de incêndio por meio de uma interface web, reunindo informações da ocorrência e sua representação geográfica em mapas interativos.
 
----
+A aplicação faz parte do ecossistema FireApp e corresponde à versão web da solução. O projeto utiliza Laravel no backend e Blade, Tailwind CSS e Vite na camada de interface.
 
-## 🛠 Tecnologias utilizadas
+## Principais funcionalidades
 
-🔹 **Laravel 12.17.0** — Framework PHP para o backend e gerenciamento de rotas, controllers, models e migrations.  
-🔹 **Tailwind CSS** — Framework CSS utility-first para estilização rápida e responsiva.  
-🔹 **Blade** — Motor de templates do Laravel para gerar o frontend de forma dinâmica.  
-🔹 **Leaflet + Leaflet Draw** — Para exibir e permitir o desenho de áreas no mapa.  
-🔹 **MySQL** — Banco de dados relacional utilizado para persistência das informações.  
-🔹 **Vite** — Ferramenta de build e hot-reload para os assets do projeto.  
+- Cadastro e gerenciamento de ocorrências de incêndio.
+- Registro de informações como tipo, gravidade, descrição e ponto de referência.
+- Representação das ocorrências em mapa interativo.
+- Desenho de áreas geográficas utilizando Leaflet Draw.
+- Painel administrativo para acompanhamento das informações cadastradas.
+- Configurações relacionadas a alertas e notificações.
+- Configurações de privacidade e compartilhamento de localização.
+- Interface responsiva para diferentes tamanhos de tela.
 
----
+## Tecnologias
 
-## 🚀 Funcionalidades principais
+### Backend
 
-- **Cadastro de incêndios** com tipo, gravidade, descrição, ponto de referência e área no mapa.
-- **Painel administrativo** para visualizar estatísticas dos incêndios.
-- **Configuração de notificações** (push, email, SMS) e raio de alerta.
-- **Privacidade do perfil** (perfil público, compartilhamento de localização).
-- **Mapa interativo** das áreas afetadas.
-- **Responsividade completa** para desktop e dispositivos móveis.
+- PHP
+- Laravel 12
+- MySQL
 
----
+### Frontend
 
-## 📥 Como rodar o projeto
+- Blade
+- Tailwind CSS
+- JavaScript
+- Vite
 
-### 1️⃣ Clone o repositório
-```bash
-git clone https://github.com/seu-usuario/fireapp.git
-cd fireapp
+### Mapas
+
+- Leaflet
+- Leaflet Draw
+
+## Estrutura do repositório
+
+A aplicação Laravel está localizada no diretório `fireapp-laravel/`.
+
+```text
+FireApp/
+├── README.md
+└── fireapp-laravel/
+    ├── app/             # Regras da aplicação, models e controllers
+    ├── bootstrap/       # Inicialização do Laravel
+    ├── config/          # Arquivos de configuração
+    ├── database/        # Migrations, seeders e factories
+    ├── public/          # Arquivos públicos
+    ├── resources/       # Views e assets da aplicação
+    ├── routes/          # Definição das rotas
+    ├── storage/         # Arquivos gerados pela aplicação
+    ├── tests/           # Testes automatizados
+    ├── composer.json    # Dependências PHP
+    └── package.json     # Dependências frontend
 ```
-### 2️⃣ Instale as dependências do PHP
+
+## Pré-requisitos
+
+Para executar o projeto localmente, tenha instalado:
+
+- PHP compatível com Laravel 12.
+- Composer.
+- Node.js e npm.
+- MySQL ou outro banco configurado para a aplicação.
+
+## Como executar
+
+Clone o repositório:
+
+```bash
+git clone https://github.com/RafaelTeixeira1/FireApp.git
+cd FireApp/fireapp-laravel
+```
+
+Instale as dependências PHP:
+
 ```bash
 composer install
 ```
 
-### 3️⃣ Instale as dependências do frontend
+Instale as dependências frontend:
+
 ```bash
 npm install
 ```
 
-### 4️⃣ Configure o ambiente
+Crie o arquivo de ambiente:
+
 ```bash
 cp .env.example .env
 php artisan key:generate
 ```
-#### 💡 Edite o .env e configure o banco de dados:
+
+Configure o banco de dados no arquivo `.env`. Exemplo:
+
 ```ini
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -65,36 +107,48 @@ DB_DATABASE=fireapp
 DB_USERNAME=seu_usuario
 DB_PASSWORD=sua_senha
 ```
-### 5️⃣ Rode as migrations
+
+Execute as migrations:
+
 ```bash
 php artisan migrate
 ```
 
-### 6️⃣ Suba o servidor
+Inicie o servidor Laravel:
+
 ```bash
 php artisan serve
 ```
 
-### 7️⃣ Rode o frontend (Tailwind/Vite)
+Em outro terminal, inicie o ambiente frontend:
+
 ```bash
 npm run dev
 ```
-#### 💡 Para build de produção:
+
+A aplicação poderá ser acessada, por padrão, em:
+
+```text
+http://127.0.0.1:8000
+```
+
+Para gerar os assets para produção:
+
 ```bash
 npm run build
 ```
 
-## ⚡ Exemplo de acesso local
-Abra o navegador:
-```cpp
-http://127.0.0.1:8000
-```
+## Estado do projeto
 
-## ✉️ Contato
-Desenvolvido por: 
-Jhannyfer Sweyvezes Rodrigues Biângulo
-Rafael de Souza Teixeira
+Projeto em desenvolvimento.
 
-Email: 
-jhannyfer.biangulo@estudante.ifgoiano.edu.br
-rafael.teixeira1@estudante.ifgoiano.edu.br
+O repositório representa a implementação web do FireApp. A evolução da solução pode incluir melhorias no sistema de alertas, monitoramento geográfico, experiência de uso e integração com outras fontes de dados relacionadas às ocorrências.
+
+## Contexto acadêmico
+
+O FireApp também é utilizado como objeto de estudo acadêmico relacionado à engenharia de requisitos, prototipagem e desenvolvimento de soluções tecnológicas para apoio ao monitoramento de incêndios.
+
+## Autores
+
+- Rafael de Souza Teixeira
+- Jhannyfer Sweyvezes Rodrigues Biângulo
